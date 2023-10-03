@@ -22,7 +22,7 @@ const TodoList = () => {
       setTodos([]);
       return;
     }
-    const q = query(collection(db, "todo"), where("user", "==", user.uid));
+    const q = query(collection(db, "city"), where("user", "==", user.uid));
 
     onSnapshot(q, (querySnapchot) => {
       let ar = [];
@@ -67,7 +67,7 @@ const TodoList = () => {
               _hover={{ boxShadow: "sm" }}
             >
               <Heading as="h3" fontSize={"xl"}>
-                {todo.title}{" "}
+                {todo.name}{" "}
                 <Badge
                   color="red.500"
                   bg="inherit"
@@ -82,29 +82,9 @@ const TodoList = () => {
                 >
                   <FaTrash />
                 </Badge>
-                <Badge
-                  color={todo.status == "pending" ? "gray.500" : "green.500"}
-                  bg="inherit"
-                  transition={"0.2s"}
-                  _hover={{
-                    bg: "inherit",
-                    transform: "scale(1.2)",
-                  }}
-                  float="right"
-                  size="xs"
-                  onClick={() => handleToggle(todo.id, todo.status)}
-                >
-                  {todo.status == "pending" ? <FaToggleOff /> : <FaToggleOn />}
-                </Badge>
-                <Badge
-                  float="right"
-                  opacity="0.8"
-                  bg={todo.status == "pending" ? "yellow.500" : "green.500"}
-                >
-                  {todo.status}
-                </Badge>
+                
               </Heading>
-              <Text>{todo.description}</Text>
+              <Text>{todo.temperature.toFixed(0)}°C</Text>
             </Box>
           ))}
       </SimpleGrid>

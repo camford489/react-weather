@@ -7,14 +7,20 @@ import {
   Stack,
   Select,
   useToast,
+  Heading,
+  Badge,
+  Text,
 } from "@chakra-ui/react";
 import useAuth from "../hooks/useAuth";
 import { addTodo } from "../api/todo";
+import { FaTrash } from "react-icons/fa";
+import {AiOutlineHeart,AiFillHeart} from 'react-icons/ai'
 const AddTodo = () => {
-  const [title, setTitle] = React.useState("");
-  const [description, setDescription] = React.useState("");
-  const [status, setStatus] = React.useState("pending");
+  const [name, setName] = React.useState("");
+  const [temperature, setTemperature] = React.useState();
+  // const [status, setStatus] = React.useState("pending");
   const [isLoading, setIsLoading] = React.useState(false);
+  const [isFavorite, setIsFavorite] = React.useState(false);
 
   const toast = useToast();
 
@@ -31,61 +37,114 @@ const AddTodo = () => {
       return;
     }
     setIsLoading(true);
+    let fetchUrl = `https://api.openweathermap.org/data/2.5/weather?q=${name}&appid=7083a084d91791a967f4ec9886fafc6d&units=metric`
+    const response = await fetch(fetchUrl)
+    const cityWeather = await response.json()
+    if (cityWeather.cod=="404") {
+      toast({ title: "Todo failed successfully", status: "error" });
+      setName("");
+      setIsLoading(false);
+      return
+    }
+    console.log(cityWeather)
+    setTemperature(cityWeather.main.temp)
+ 
+    setIsLoading(false);
+
+    // setName("");
+    // setTemperature("");
+    // setStatus("pending");
+
+    toast({ title: "City searched successfully", status: "success" });
+  };
+const handleFavorite = async()=>{
+  setIsFavorite(true)
+  setTimeout(async()=>{
+
     const todo = {
-      title,
-      description,
-      status,
+      name,
+      temperature,
       userId: user.uid,
     };
     await addTodo(todo);
-    setIsLoading(false);
-
-    setTitle("");
-    setDescription("");
-    setStatus("pending");
-
-    toast({ title: "Todo created successfully", status: "success" });
-  };
-
+     setName("")
+  setTemperature(null)
+  setIsFavorite(false)
+  },1000)
+    toast({ title: "Todo saved successfully", status: "success" });
+  // setName("")
+  // setTemperature(null)
+}
+const handleRemover = ()=>{
+  setName("")
+  setTemperature(null)
+}
   return (
     <Box w="40%" margin={"0 auto"} display="block" mt={5}>
       <Stack direction="column">
         <Input
-          placeholder="Title"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
+          placeholder="Name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
         />
-
-        <Textarea
-          placeholder="Description"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-        />
-
-        <Select value={status} onChange={(e) => setStatus(e.target.value)}>
-          <option
-            value={"pending"}
-            style={{ color: "yellow", fontWeight: "bold" }}
-          >
-            Pending ⌛
-          </option>
-          <option
-            value={"completed"}
-            style={{ color: "green", fontWeight: "bold" }}
-          >
-            Completed ✅
-          </option>
-        </Select>
 
         <Button
           onClick={() => handleTodoCreate()}
-          disabled={title.length < 1 || description.length < 1 || isLoading}
+          disabled={name.length < 1 || isLoading}
           variantcolor="teal"
           variant="solid"
         >
           Add
         </Button>
       </Stack>
+      {
+        name !="" && temperature !=null? <div style={{height:"100px"}}>
+            <Box
+         
+              p={3}
+              boxShadow="2xl"
+              shadow={"dark-lg"}
+              transition="0.2s"
+              _hover={{ boxShadow: "sm" }}
+            >
+              <Heading as="h3" fontSize={"xl"}>
+                {name}{" "}
+                <Badge
+                  color="red.500"
+                  bg="inherit"
+                  transition={"0.2s"}
+                  _hover={{
+                    bg: "inherit",
+                    transform: "scale(1.2)",
+                  }}
+                  float="right"
+                  size="xs"
+                  onClick={() => handleFavorite()}
+                >
+                  {isFavorite?<AiFillHeart />:<AiOutlineHeart />}
+                </Badge>
+                <Badge
+                  color="red.500"
+                  bg="inherit"
+                  transition={"0.2s"}
+                  _hover={{
+                    bg: "inherit",
+                    transform: "scale(1.2)",
+                  }}
+                  float="right"
+                  size="xs"
+                  onClick={() => handleRemover()}
+                >
+                  <FaTrash />
+                </Badge>
+                
+              </Heading>
+              <Text>{temperature.toFixed(0)}°C</Text>
+            </Box>
+        </div>:<div style={{height:"100px"}}>
+
+        </div>
+      }
     </Box>
   );
 };
