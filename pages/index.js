@@ -1,14 +1,18 @@
 import { Container } from "@chakra-ui/react";
-import Auth from "../components/Auth";
-import AddTodo from "../components/AddTodo";
-import TodoList from "../components/TodoList";
+import Header from "../components/Header";
+import AddCity from "../components/AddCity";
+import CityList from "../components/CityList";
 
 export default function Home() {
   return (
-    <Container maxW="7xl">
-      <Auth />
-      <AddTodo />
-      <TodoList />
+    <Container 
+      maxW="full" 
+      paddingInlineStart={0}
+      paddingInlineEnd={0}
+      >
+      <Header />
+      <AddCity />
+      <CityList />
     </Container>
   );
 }

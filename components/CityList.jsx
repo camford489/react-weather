@@ -1,35 +1,39 @@
 import {
   Badge,
   Box,
+  Center,
+  Container,
+  Flex,
   Heading,
   SimpleGrid,
   Text,
   useToast,
 } from "@chakra-ui/react";
 import React, { useEffect } from "react";
+import Link from 'next/link';
 import useAuth from "../hooks/useAuth";
 import { collection, onSnapshot, query, where } from "firebase/firestore";
 import { db } from "../firebase";
 import { FaToggleOff, FaToggleOn, FaTrash } from "react-icons/fa";
-import { deleteTodo, toggleTodoStatus } from "../api/todo";
-const TodoList = () => {
-  const [todos, setTodos] = React.useState([]);
+import { deleteCity, toggleCityStatus } from "../api/city";
+const CityList = () => {
+  const [cities, setCities] = React.useState([]);
 
   const { user } = useAuth();
   const toast = useToast();
   const refreshData = () => {
     if (!user) {
-      setTodos([]);
+      setCities([]);
       return;
     }
     const q = query(collection(db, "city"), where("user", "==", user.uid));
 
-    onSnapshot(q, (querySnapchot) => {
+    onSnapshot(q, (querySnapshot) => {
       let ar = [];
-      querySnapchot.docs.forEach((doc) => {
+      querySnapshot.docs.forEach((doc) => {
         ar.push({ id: doc.id, ...doc.data() });
       });
-      setTodos(ar);
+      setCities(ar);
     });
   };
 
@@ -37,37 +41,43 @@ const TodoList = () => {
     refreshData();
   }, [user]);
 
-  const handleTodoDelete = async (id) => {
-    if (confirm("Are you sure you wanna delete this todo?")) {
-      deleteTodo(id);
-      toast({ title: "Todo deleted successfully", status: "success" });
+  const handleCityDelete = async (id) => {
+    if (confirm("Are you sure you wanna delete this city?")) {
+      deleteCity(id);
+      toast({ title: "City deleted successfully", status: "success" });
     }
   };
 
   const handleToggle = async (id, status) => {
     const newStatus = status == "completed" ? "pending" : "completed";
-    await toggleTodoStatus({ docId: id, status: newStatus });
+    await toggleCityStatus({ docId: id, status: newStatus });
     toast({
-      title: `Todo marked ${newStatus}`,
+      title: `City marked ${newStatus}`,
       status: newStatus == "completed" ? "success" : "warning",
     });
   };
 
   return (
     <Box mt={5}>
-      <SimpleGrid columns={{ base: 1, md: 3 }} spacing={8}>
-        {todos &&
-          todos.map((todo) => (
-            <Box
-              key={todo.id}
+      <Container
+				maxWidth={1000}
+							
+			>
+      <SimpleGrid columns={{ base: 1, md: 3 }} spacing={8} >
+        {cities &&
+          cities.map((city) => (
+            <Link
+              href={city.name}
+              key={city.id}
               p={3}
-              boxShadow="2xl"
+              boxShadow="base"
               shadow={"dark-lg"}
               transition="0.2s"
-              _hover={{ boxShadow: "sm" }}
+              _hover={{ boxShadow: "xl" }}
             >
+              <div>
               <Heading as="h3" fontSize={"xl"}>
-                {todo.name}{" "}
+                {city.name}{" "}
                 <Badge
                   color="red.500"
                   bg="inherit"
@@ -78,18 +88,20 @@ const TodoList = () => {
                   }}
                   float="right"
                   size="xs"
-                  onClick={() => handleTodoDelete(todo.id)}
+                  onClick={() => handleCityDelete(city.id)}
                 >
                   <FaTrash />
                 </Badge>
                 
               </Heading>
-              <Text>{todo.temperature.toFixed(0)}°C</Text>
-            </Box>
+              <Text>{city.temperature.toFixed(0)}°C</Text>
+              </div>
+            </Link>
           ))}
       </SimpleGrid>
+      </Container>
     </Box>
   );
 };
 
-export default TodoList;
+export default CityList;

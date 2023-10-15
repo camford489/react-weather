@@ -4,18 +4,22 @@ import {
 	Container,
 	Flex,
 	Heading,
+	useColorMode,
 	useColorModeValue,
 	useDisclosure
 } from '@chakra-ui/react';
 // import { Link } from 'react-router-dom';
-import { useState, useCallback } from "react";
+import { useState, useCallback, Link } from "react";
+import { FaGoogle, FaMoon, FaSun } from "react-icons/fa";
+import Auth from "../components/Auth";
+
 
 // import DrawerMenu from '../DrawerMenu';
 
 const Header = () => {
 	// Mobile Drawer
 	// const { isOpen, onOpen, onClose } = useDisclosure();
-
+const { toggleColorMode, colorMode } = useColorMode();
 const [temp, setTemp] = useState(20);
   const [unit, setUnit] = useState("C");
 
@@ -39,27 +43,36 @@ const [temp, setTemp] = useState(20);
 		<Box
 			boxShadow={'md'}
 			backgroundColor={useColorModeValue('gray.100', 'gray.900')}
-			paddingY={6}
+			paddingY={10}
 			position={'sticky'}
 			top={0}
-		>
+			maxW={'full'}			
+		>			
 			<Container
-				maxW={'container.lg'}
+				maxW={'full'}
 				as={Flex}
 				gap={2}
 				alignItems={'center'}
-				justifyContent={'space-between'}
+				justifyContent={'space-around'}				
 			>
-				<Heading as={Link} to={'/'} fontWeight={'bold'} fontSize={'lg'}>
-					Test Weather App - React / TypeScript / OpenWeather API
-				</Heading>
-				<div>
+			<Heading as={Link} to={'/'} fontWeight={'bold'} fontSize={'lg'}>
+				Test Weather App - React / TypeScript / OpenWeather API
+			</Heading>
+			<div>
 				<p>
-        Temperature {temp}º{unit}
-      </p>
-        {/* {buttonText} {weatherData} */}
-      </div>
-      <Button onClick={convert}>Convert to º{oppositeUnit}</Button>
+					Temperature {temp}º{unit}
+				</p>
+				{/* {buttonText} {weatherData} */}
+				<Button onClick={convert}>
+					Convert to º{oppositeUnit}
+				</Button>
+				<Button onClick={() => toggleColorMode()}>
+        		{colorMode == "dark" ? <FaSun /> : <FaMoon />}
+      		</Button>
+			</div>
+      		
+			
+	  		<Auth />
 			</Container>
 		</Box>
 	);

@@ -12,10 +12,10 @@ import {
   Text,
 } from "@chakra-ui/react";
 import useAuth from "../hooks/useAuth";
-import { addTodo } from "../api/todo";
+import { addCity } from "../api/city";
 import { FaTrash } from "react-icons/fa";
 import {AiOutlineHeart,AiFillHeart} from 'react-icons/ai'
-const AddTodo = () => {
+const AddCity = () => {
   const [name, setName] = React.useState("");
   const [temperature, setTemperature] = React.useState();
   // const [status, setStatus] = React.useState("pending");
@@ -26,10 +26,10 @@ const AddTodo = () => {
 
   const { isLoggedIn, user } = useAuth();
 
-  const handleTodoCreate = async () => {
+  const handleCityCreate = async () => {
     if (!isLoggedIn) {
       toast({
-        title: "You must be logged in to create a todo",
+        title: "You must be logged in to create a City",
         status: "error",
         duration: 9000,
         isClosable: true,
@@ -41,7 +41,7 @@ const AddTodo = () => {
     const response = await fetch(fetchUrl)
     const cityWeather = await response.json()
     if (cityWeather.cod=="404") {
-      toast({ title: "Todo failed successfully", status: "error" });
+      toast({ title: "City failed successfully", status: "error" });
       setName("");
       setIsLoading(false);
       return
@@ -51,27 +51,23 @@ const AddTodo = () => {
  
     setIsLoading(false);
 
-    // setName("");
-    // setTemperature("");
-    // setStatus("pending");
-
     toast({ title: "City searched successfully", status: "success" });
   };
 const handleFavorite = async()=>{
   setIsFavorite(true)
   setTimeout(async()=>{
 
-    const todo = {
+    const city = {
       name,
       temperature,
       userId: user.uid,
     };
-    await addTodo(todo);
+    await addCity(city);
      setName("")
   setTemperature(null)
   setIsFavorite(false)
   },1000)
-    toast({ title: "Todo saved successfully", status: "success" });
+    toast({ title: "City saved successfully", status: "success" });
   // setName("")
   // setTemperature(null)
 }
@@ -80,8 +76,9 @@ const handleRemover = ()=>{
   setTemperature(null)
 }
   return (
-    <Box w="40%" margin={"0 auto"} display="block" mt={5}>
-      <Stack direction="column">
+    <Box w="40%" margin={"0 auto"} display="block" mt={10}>
+      <Stack direction="column"
+      >
         <Input
           placeholder="Name"
           value={name}
@@ -149,4 +146,4 @@ const handleRemover = ()=>{
   );
 };
 
-export default AddTodo;
+export default AddCity;
