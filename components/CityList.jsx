@@ -5,12 +5,12 @@ import {
   Container,
   Flex,
   Heading,
+  Link,
   SimpleGrid,
   Text,
   useToast,
 } from "@chakra-ui/react"; 
 import React, { useEffect } from "react";
-// import Link from 'next/link';
 import useAuth from "../hooks/useAuth";
 import { collection, onSnapshot, query, where } from "firebase/firestore";
 import { db } from "../firebase";
@@ -67,7 +67,7 @@ const CityList = () => {
         {cities &&
           cities.map((city) => (
             <Box
-              as='a'
+              as={Link}
               // cursor='pointer'
               href={city.name}
               key={city.id}
