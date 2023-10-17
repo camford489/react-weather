@@ -8,8 +8,8 @@ import {
 	useColorModeValue,
 	useDisclosure
 } from '@chakra-ui/react';
-// import { Link } from 'react-router-dom';
-import { useState, useCallback, Link } from "react";
+import { Link } from 'react-router-dom';
+import { useState, useCallback } from "react";
 import { FaGoogle, FaMoon, FaSun } from "react-icons/fa";
 import Auth from "../components/Auth";
 
