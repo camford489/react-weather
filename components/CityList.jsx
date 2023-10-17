@@ -10,12 +10,12 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import React, { useEffect } from "react";
-import Link from 'next/link';
+// import Link from 'next/link';
 import useAuth from "../hooks/useAuth";
 import { collection, onSnapshot, query, where } from "firebase/firestore";
 import { db } from "../firebase";
 import { FaToggleOff, FaToggleOn, FaTrash } from "react-icons/fa";
-import { deleteCity, toggleCityStatus } from "../api/city";
+import { deleteCity, toggleCityStatus } from "../pages/api/city";
 const CityList = () => {
   const [cities, setCities] = React.useState([]);
 

@@ -12,7 +12,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import useAuth from "../hooks/useAuth";
-import { addCity } from "../api/city";
+import { addCity } from "../pages/api/city";
 import { FaTrash } from "react-icons/fa";
 import {AiOutlineHeart,AiFillHeart} from 'react-icons/ai'
 const AddCity = () => {
