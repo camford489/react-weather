@@ -8,7 +8,7 @@ import {
   SimpleGrid,
   Text,
   useToast,
-} from "@chakra-ui/react";
+} from "@chakra-ui/react"; 
 import React, { useEffect } from "react";
 // import Link from 'next/link';
 import useAuth from "../hooks/useAuth";
