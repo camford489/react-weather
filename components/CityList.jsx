@@ -66,14 +66,16 @@ const CityList = () => {
       <SimpleGrid columns={{ base: 1, md: 3 }} spacing={8} >
         {cities &&
           cities.map((city) => (
-            <Link
+            <Box
+              as='a'
+              // cursor='pointer'
               href={city.name}
               key={city.id}
               p={3}
               boxShadow="base"
               shadow={"dark-lg"}
-              transition="0.2s"
-              _hover={{ boxShadow: "xl" }}
+              transition="0.25s"
+              _hover={{ boxShadow: "xl", backgroundColor: "skyblue", color:"white", transform: "scale(1.075)" }}
             >
               <div>
               <Heading as="h3" fontSize={"xl"}>
@@ -96,7 +98,7 @@ const CityList = () => {
               </Heading>
               <Text>{city.temperature.toFixed(0)}°C</Text>
               </div>
-            </Link>
+            </Box>
           ))}
       </SimpleGrid>
       </Container>
