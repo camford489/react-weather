@@ -80,7 +80,7 @@ const handleRemover = ()=>{
       <Stack direction="column"
       >
         <Input
-          placeholder="Name"
+          placeholder="Please enter a city name"
           value={name}
           onChange={(e) => setName(e.target.value)}
         />
