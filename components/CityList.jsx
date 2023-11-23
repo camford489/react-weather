@@ -10,7 +10,7 @@ import {
   Text,
   useToast,
 } from "@chakra-ui/react"; 
-import React, { useEffect } from "react";
+import React, { useEffect, refreshData } from "react";
 import useAuth from "../hooks/useAuth";
 import { collection, onSnapshot, query, where } from "firebase/firestore";
 import { db } from "../firebase";
@@ -21,23 +21,24 @@ const CityList = () => {
 
   const { user } = useAuth();
   const toast = useToast();
-  const refreshData = () => {
-    if (!user) {
-      setCities([]);
-      return;
-    }
-    const q = query(collection(db, "city"), where("user", "==", user.uid));
-
-    onSnapshot(q, (querySnapshot) => {
-      let ar = [];
-      querySnapshot.docs.forEach((doc) => {
-        ar.push({ id: doc.id, ...doc.data() });
-      });
-      setCities(ar);
-    });
-  };
+  
 
   useEffect(() => {
+    const refreshData = () => {
+      if (!user) {
+        setCities([]);
+        return;
+      }
+      const q = query(collection(db, "city"), where("user", "==", user.uid));
+  
+      onSnapshot(q, (querySnapshot) => {
+        let ar = [];
+        querySnapshot.docs.forEach((doc) => {
+          ar.push({ id: doc.id, ...doc.data() });
+        });
+        setCities(ar);
+      });
+    };
     refreshData();
   }, [user]);
 
