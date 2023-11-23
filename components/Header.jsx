@@ -9,7 +9,6 @@ import {
 	useColorModeValue,
 	useDisclosure
 } from '@chakra-ui/react';
-// import { Link } from 'react-router-dom';
 import { useState, useCallback } from "react";
 import { FaGoogle, FaMoon, FaSun } from "react-icons/fa";
 import Auth from "../components/Auth";
@@ -57,7 +56,7 @@ const [temp, setTemp] = useState(20);
 				justifyContent={'space-around'}				
 			>
 			<Heading as={Link} to={'/'} fontWeight={'bold'} fontSize={'lg'}>
-				Test Weather App - React / TypeScript / OpenWeather API
+				Test Weather App - React / Next.js / OpenWeather API
 			</Heading>
 			<div>
 				<p>

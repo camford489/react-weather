@@ -14,7 +14,7 @@ import React, { useEffect } from "react";
 import useAuth from "../hooks/useAuth";
 import { collection, onSnapshot, query, where } from "firebase/firestore";
 import { db } from "../firebase";
-import { FaToggleOff, FaToggleOn, FaTrash } from "react-icons/fa";
+import { FaTrash } from "react-icons/fa";
 import { deleteCity, toggleCityStatus } from "../pages/api/city";
 const CityList = () => {
   const [cities, setCities] = React.useState([]);

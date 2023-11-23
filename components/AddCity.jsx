@@ -41,7 +41,7 @@ const AddCity = () => {
     const response = await fetch(fetchUrl)
     const cityWeather = await response.json()
     if (cityWeather.cod=="404") {
-      toast({ title: "City failed successfully", status: "error" });
+      toast({ title: "City weather unavailable", status: "error" });
       setName("");
       setIsLoading(false);
       return
@@ -51,7 +51,7 @@ const AddCity = () => {
  
     setIsLoading(false);
 
-    toast({ title: "City searched successfully", status: "success" });
+    toast({ title: "City weather found", status: "success" });
   };
 const handleFavorite = async()=>{
   setIsFavorite(true)
