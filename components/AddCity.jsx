@@ -18,7 +18,6 @@ import {AiOutlineHeart,AiFillHeart} from 'react-icons/ai'
 const AddCity = () => {
   const [name, setName] = React.useState("");
   const [temperature, setTemperature] = React.useState();
-  // const [status, setStatus] = React.useState("pending");
   const [isLoading, setIsLoading] = React.useState(false);
   const [isFavorite, setIsFavorite] = React.useState(false);
 
@@ -86,9 +85,9 @@ const handleRemover = ()=>{
         />
 
         <Button
-          onClick={() => handleTodoCreate()}
+          onClick={() => handleCityCreate()}
           disabled={name.length < 1 || isLoading}
-          variantcolor="teal"
+          bg="skyblue"
           variant="solid"
         >
           Add

@@ -1,17 +1,31 @@
-import { Container } from "@chakra-ui/react";
-import Header from "../../components/Header";
+import { db } from "../../firebase";
+import {
+  collection,
+  addDoc,
+  updateDoc,
+  doc,
+  deleteDoc,
+} from "firebase/firestore";
 
-export default function AddCity() {
-  return (
-    <Container 
-      maxW="full" 
-      paddingInlineStart={0}
-      paddingInlineEnd={0}
-      >
-      <Header />
-      <>
-      <h1>City Name</h1>
-      </>
-    </Container>
-  );
-}
+const addCity = async ({ userId, name, temperature }) => {
+  try {
+    await addDoc(collection(db, "city"), {
+      user: userId,
+      name: name,
+      temperature: temperature,
+     
+      createdAt: new Date().getTime(),
+    });
+  } catch (err) {}
+};
+
+const deleteCity = async (docId) => {
+  try {
+    const cityRef = doc(db, "city", docId);
+    await deleteDoc(cityRef);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export { addCity, deleteCity };

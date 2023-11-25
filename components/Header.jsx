@@ -12,13 +12,15 @@ import {
 import { useState, useCallback } from "react";
 import { FaGoogle, FaMoon, FaSun } from "react-icons/fa";
 import Auth from "../components/Auth";
+import { Pacifico } from 'next/font/google'
 
-
-// import DrawerMenu from '../DrawerMenu';
+const pacifico = Pacifico({
+	subsets: ['latin'],
+	weight: '400',
+  })
 
 const Header = () => {
-	// Mobile Drawer
-	// const { isOpen, onOpen, onClose } = useDisclosure();
+
 const { toggleColorMode, colorMode } = useColorMode();
 const [temp, setTemp] = useState(20);
   const [unit, setUnit] = useState("C");
@@ -41,12 +43,13 @@ const [temp, setTemp] = useState(20);
 
 	return (
 		<Box
-			boxShadow={'md'}
-			backgroundColor={useColorModeValue('gray.100', 'gray.900')}
+			boxShadow={'sm'}
+			bg={'lightblue'}
 			paddingY={10}
 			position={'sticky'}
 			top={0}
-			maxW={'full'}			
+			maxW={'full'}	
+			py={'5'}		
 		>			
 			<Container
 				maxW={'full'}
@@ -55,21 +58,21 @@ const [temp, setTemp] = useState(20);
 				alignItems={'center'}
 				justifyContent={'space-around'}				
 			>
-			<Heading as={Link} to={'/'} fontWeight={'bold'} fontSize={'lg'}>
-				Test Weather App - React / Next.js / OpenWeather API
+			<Heading as={Link} href={'./'} fontWeight={'bold'} fontFamily={pacifico.className} fontSize={'4xl' }>
+				What's your Weather?
 			</Heading>
-			<div>
+			{/* <div>
 				<p>
 					Temperature {temp}º{unit}
 				</p>
-				{/* {buttonText} {weatherData} */}
+				
 				<Button onClick={convert}>
 					Convert to º{oppositeUnit}
 				</Button>
 				<Button onClick={() => toggleColorMode()}>
         		{colorMode == "dark" ? <FaSun /> : <FaMoon />}
       		</Button>
-			</div>
+			</div> */}
       		
 			
 	  		<Auth />
