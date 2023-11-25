@@ -59,7 +59,7 @@ const [temp, setTemp] = useState(20);
 				justifyContent={'space-around'}				
 			>
 			<Heading as={Link} href={'./'} fontWeight={'bold'} fontFamily={pacifico.className} fontSize={'4xl' }>
-				What's your Weather?
+				What&apos;s your Weather?
 			</Heading>
 			{/* <div>
 				<p>
