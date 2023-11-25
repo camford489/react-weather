@@ -35,7 +35,8 @@ const CityPage = () => {
     if (city) {
       fetchCityData();
     }
-  }, [city]); // Include 'city' as a dependency
+  },
+  ); // Include 'city' as a dependency
 
   if (!cityData) {
     return <div>Loading...</div>;
